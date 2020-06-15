@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bellota:wght@700&family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      .marker {
+        background-image: url("https://cdn.glitch.com/08f900af-bd82-40f7-a55e-aabce6ce09df%2Fthumbnails%2Flocation.png?1592240872139");
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      .mapboxgl-popup {
+        max-width: 200px;
+      }
+
+      .mapboxgl-popup-content {
+        text-align: center;
+        font-family: "Montserrat", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script>
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoidGFkZWEiLCJhIjoiY2tiZ295bjRqMTdqeTJubWtnNndqeWZ1aCJ9.mVJvRT1Yd4ForVN0-eeJBw";
+
+      var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/tadea/ckbgw8k740w1n1hplerf622sx",
+        center: [5, 46.149, 12.92],
+        zoom: 2,
+      });
+
+      //fetch location gejson
+      var geojson = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [15.240783691406248, 44.12407069610247],
+            },
+            properties: {
+              title: "Zadar,Croatia",
+              description:
+                "The world’s first pipe organ played by the sea and is also known for its sunset which Alfred Hitchcock said was the most beautiful in the world.",
+              URL:
+                "<a href='https://www.zaton.hr/en/blog/65/little-known-facts-and-curiosities-about-zadar' target='_blank'>Learn More</a>",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [15.97412109375, 45.81779363484953],
+            },
+            properties: {
+              title: "Zagreb,Croatia",
+              description:
+                "Zagreb has more museums per capita than anywhere else in the world, giving it the nickname of the city of museums.",
+              URL:
+                "<a href='https://www.thelocal.de/20150330/ten-surprising-things-you-didnt-know-about-zagreb-tlccu' target='_blank'>Learn More</a>",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [18.08937549591064, 42.65046902151334],
+            },
+            properties: {
+              title: "Dubrovnik,Croatia",
+              description:
+                "The old town was finished being built in the 13th century. And guess what? It remains almost completely unchanged today!",
+              URL:
+                "<a href='hhttps://www.telegraph.co.uk/travel/destinations/europe/croatia/dubrovnik/articles/amazing-things-you-probably-didnt-know-about-dubrovnik/' target='_blank'>Learn More</a>",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [16.438980102539062, 43.5119579446757],
+            },
+            properties: {
+              title: "Split,Croatia",
+              description:
+                "Diocletian Palace is one of the best preserved monuments of the Roman architecture in the world",
+              URL:
+                "<a href='https://visitsplit.com/en/448/diocletian-palace' target='blank'>Learn More</a>",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [13.84552001953125, 44.86949623772188],
+            },
+            properties: {
+              title: "Pula,Croatia",
+              description:
+                'The world"s largest amphora find is located in Pula. Near the Amphitheater were they found just over two thousand.',
+              URL:
+                "<a href='https://www.total-croatia-news.com/item/12653-pula-25-things-to-know-about-istria-s-city-of-tolerance' target='blank'>Learn More</a>",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [14.049797058105469, 45.348526091992255],
+            },
+            properties: {
+              title: "Hum,Croatia",
+              description:
+                "Often referred to as the smallest town in the world, Hum is a symbol of architecture and mediaeval culture, and the entire town can rightfully be considered a monument in and of itself.",
+              URL:
+                "<a href='https://www.valamar-experience.com/destinations/istria/hum' target='blank'>Learn More</a>",
+            },
+          },
+          {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [16.65252685546875, 43.297198404646366],
+            },
+            properties: {
+              title: "Island of Brac,Croatia",
+              description:
+                "Did you know that the famous beach of Zlatni Rat changes its appearance depending on the winds?",
+              URL:
+                "<a href='https://www.bracinfo.com/' target='blank'>Learn More</a>",
+            },
+          },
+        ],
+      };
+
+      //add markers
+      geojson.features.forEach(function (marker) {
+        // create a HTML element for each feature
+        var el = document.createElement("div");
+        el.className = "marker";
+
+        // make a marker for each feature and add to the map
+        new mapboxgl.Marker(el)
+          .setLngLat(marker.geometry.coordinates)
+          .setPopup(
+            new mapboxgl.Popup({ offset: 25 }) // add popups
+              .setHTML(
+                "<h2>" +
+                  marker.properties.title +
+                  "</h2><p>" +
+                  marker.properties.description +
+                  "</p>" +
+                  marker.properties.URL
+              )
+          )
+          .addTo(map);
+      });
+    </script>
+  </body>
+</html>
